@@ -2,6 +2,14 @@ package main
 
 import "fmt"
 
+func fact(n int) int {
+	p := 1
+	for i := 1; i <= n; i++ {
+		p *= i
+	}
+	return p
+}
+
 func main() {
 	fmt.Println("Hello林语杰")
 	fmt.Println("hello" + "林语杰")
@@ -21,5 +29,10 @@ func main() {
 		sum += i
 		fmt.Println(sum)
 	}
+
+	var n int
+	fmt.Println("Input:")
+	fmt.Scan(&n)
+	fmt.Println("n! = ", fact(n))
 
 }
