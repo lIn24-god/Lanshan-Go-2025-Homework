@@ -6,3 +6,49 @@
 // 将日志信息保存在文件
 // 日志信息中要包含时间和Unix时间戳
 package main
+
+import (
+	"fmt"
+	"io"
+	"os"
+	"time"
+)
+
+func main() {
+
+	// 打开一个日志文件，如果文件不存在则创建，追加写入
+	file, err := os.OpenFile("file", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+	if err != nil {
+		fmt.Println("OpenFile fail!")
+		return
+	}
+	// 创建一个带时间戳的写入器
+	logWriter := newTimestampWriter(file)
+
+	// 模拟用户操作并记录日志
+	fmt.Fprintln(logWriter, "用户登录")
+	time.Sleep(2 * time.Second)
+	fmt.Fprintln(logWriter, "用户执行操作A")
+	time.Sleep(1 * time.Second)
+	fmt.Fprintln(logWriter, "用户执行操作B")
+}
+
+// timestampWriter 是一个实现 io.Writer 接口的结构体，它在写入数据前添加时间和时间戳
+type timestampWriter struct {
+	logFile io.Writer
+}
+
+// 传入一个io.writer,file实现了io.writer接口
+func newTimestampWriter(w io.Writer) *timestampWriter {
+	return &timestampWriter{logFile: w}
+}
+
+func (tw *timestampWriter) Write(p []byte) (n int, err error) {
+	// 添加时间戳和时间
+	currentTime := time.Now()
+	formatTime := currentTime.Format("2006-01-02 15:04:05")
+	unixTime := currentTime.Unix()
+	timestamp := fmt.Sprintf("[%s] [%d] %s", formatTime, unixTime, string(p))
+	// 输出到文件
+	return tw.logFile.Write([]byte(timestamp))
+}
