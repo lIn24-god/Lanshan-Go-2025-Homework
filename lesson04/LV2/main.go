@@ -22,8 +22,12 @@ func main() {
 		fmt.Println("OpenFile fail!")
 		return
 	}
+	defer file.Close()
+
+	// 创建multiWriter，同时输出到文件与控制台
+	multiWriter := io.MultiWriter(file, os.Stdout)
 	// 创建一个带时间戳的写入器
-	logWriter := newTimestampWriter(file)
+	logWriter := newTimestampWriter(multiWriter)
 
 	// 模拟用户操作并记录日志
 	fmt.Fprintln(logWriter, "用户登录")
