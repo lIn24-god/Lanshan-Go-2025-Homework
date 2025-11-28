@@ -1,4 +1,4 @@
-// LV2
+// LV2&PLus
 // 通过这节课的学习，相信你们都对 Go 语言的 I/O 有了比较清晰的认识。那么自己动手来实现一个日志 I/O 接口吧
 //
 // 需要实现的功能：
@@ -8,6 +8,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"io"
 	"os"
@@ -15,9 +16,10 @@ import (
 )
 
 func main() {
-
+	logPath := flag.String("log", "app.log", "日志文件路径")
+	flag.Parse()
 	// 打开一个日志文件，如果文件不存在则创建，追加写入
-	file, err := os.OpenFile("file", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+	file, err := os.OpenFile(*logPath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
 	if err != nil {
 		fmt.Println("OpenFile fail!")
 		return
