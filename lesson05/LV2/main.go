@@ -15,6 +15,7 @@
 package main
 
 import (
+	"LV2/taskpool"
 	"fmt"
 	"sync"
 )
@@ -58,4 +59,18 @@ func main() {
 	close(ch)
 	wg.Wait()
 	fmt.Println(sum)
+
+	//=================================================================
+
+	pool := taskpool.NewWorkPoll(5)
+
+	for i := 0; i < 10; i++ {
+		taskID := i
+		pool.Submit(func() {
+			fmt.Println("执行任务", taskID)
+		})
+	}
+
+	pool.Wait()
+	fmt.Println("所有任务完成")
 }
