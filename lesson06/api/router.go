@@ -1,13 +1,18 @@
 package api
 
 import (
-	"github.com/gin-gonic/gin"
 	"lesson06/middleware"
+
+	"github.com/gin-gonic/gin"
 )
 
-func InitRouter_gin() {
+func InitRouterGin() *gin.Engine {
 	r := gin.Default()
-	r.GET("/ping", middleware.Example1(), middleware.Example2(), Ping1)
-	r.POST("login", Login)
-	r.Run(":8080")
+	r.Use(middleware.CORS()) //全局中间件
+	r.POST("/register", Register)
+	r.POST("/login", Login)
+	r.GET("/ping", pong)
+	r.PUT("/user/password", middleware.JWTAuth(), ChangePassword) //在修改密码前先验证身份
+
+	return r
 }
