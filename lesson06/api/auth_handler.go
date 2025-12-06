@@ -79,8 +79,8 @@ func ChangePassword(c *gin.Context) {
 
 	// 1. 定义请求体结构
 	type ChangePasswordReq struct {
-		OldPassword string `json:"old_password" binding:"required"`
-		NewPassword string `json:"new_password" binding:"required,min=6"`
+		OldPassword string `json:"oldpassword"`
+		NewPassword string `json:"newpassword"`
 	}
 	var req ChangePasswordReq
 
