@@ -4,9 +4,9 @@ import (
 	"net/http"
 	"time"
 
-	"lesson06/dao"
-	"lesson06/model"
-	"lesson06/utils"
+	"lesson07/dao"
+	"lesson07/model"
+	"lesson07/utils"
 
 	"github.com/gin-gonic/gin"
 )

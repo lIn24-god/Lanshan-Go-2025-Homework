@@ -1,7 +1,7 @@
 package api
 
 import (
-	"lesson06/middleware"
+	"lesson07/middleware"
 
 	"github.com/gin-gonic/gin"
 )
